@@ -2,6 +2,9 @@
 
 A runnable sample that demonstrates **episodic memory** and **feedback** for UiPath Agents, using the **Resolution Drafter Agent** at fictional company PATH Industries.
 
+## Status - May 15 2026
+This example is still under construction! Open a GitHub issue if you have questions.
+
 ## The concepts
 This sample is designed to illustrate how the following concepts work:
 - Agent Memory (Episodic) - how it works, and how to set it up.
