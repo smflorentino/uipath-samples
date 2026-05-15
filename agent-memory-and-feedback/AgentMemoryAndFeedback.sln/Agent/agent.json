@@ -1,0 +1,268 @@
+{
+  "version": "1.1.0",
+  "settings": {
+    "model": "anthropic.claude-opus-4-6-v1",
+    "maxTokens": 64000,
+    "temperature": 0,
+    "engine": "basic-v2",
+    "maxIterations": 25,
+    "mode": "standard"
+  },
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "customer_name": {
+        "type": "string",
+        "description": "Display name on the email greeting."
+      },
+      "customer_tier": {
+        "type": "string",
+        "description": "Customer tier; tone signal.",
+        "enum": [
+          "platinum",
+          "gold",
+          "silver",
+          "standard"
+        ]
+      },
+      "flags": {
+        "type": "string",
+        "description": "Comma-separated account flags (e.g., 'repeat_disputer', 'high_value_account', 'high_value_account, repeat_disputer'). Use 'none' or empty string when no flags apply."
+      },
+      "invoice_number": {
+        "type": "string",
+        "description": "Exact invoice ID; must appear verbatim in subject and body."
+      },
+      "dispute_description": {
+        "type": "string",
+        "description": "The customer's own words from the portal submission."
+      },
+      "root_cause": {
+        "type": "string",
+        "description": "Analyst root-cause finding for the dispute.",
+        "enum": [
+          "pricing_mismatch",
+          "tax_type_error",
+          "tax_rate_error",
+          "duplicate_charge",
+          "missing_discount",
+          "quantity_mismatch",
+          "multiple"
+        ]
+      },
+      "recommended_resolution": {
+        "type": "string",
+        "description": "Recommended downstream action for this dispute.",
+        "enum": [
+          "full_credit",
+          "partial_credit",
+          "revised_invoice",
+          "credit_and_revised_invoice"
+        ]
+      },
+      "line_items_summary": {
+        "type": "string",
+        "description": "One-line description of impacted line items (e.g., '2 line items, HR Coil HSN 7208')."
+      },
+      "adjustment_type": {
+        "type": "string",
+        "description": "What the upstream subflow posted to the ERP.",
+        "enum": [
+          "credit_memo",
+          "revised_invoice",
+          "both"
+        ]
+      },
+      "adjustment_id": {
+        "type": "string",
+        "description": "Adjustment identifier(s) (e.g., 'CM-2026-001234' or 'REV-INV-2026-005678'). For adjustment_type 'both', pass both IDs comma-separated."
+      },
+      "credit_amount": {
+        "type": "number",
+        "description": "Credit amount in INR. Zero for pure tax-type corrections."
+      },
+      "adjusted_invoice_balance": {
+        "type": "number",
+        "description": "Remaining balance on the original invoice post-adjustment, in INR."
+      },
+      "finance_manager_name": {
+        "type": "string",
+        "description": "Sign-off name."
+      },
+      "company_name": {
+        "type": "string",
+        "description": "Sender company name (e.g., 'PATH Industries')."
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "subject": {
+        "type": "string",
+        "description": "Specific subject line referencing the invoice number and the nature of the resolution."
+      },
+      "body": {
+        "type": "string",
+        "description": "Full email body, greeting through sign-off, plain text."
+      }
+    }
+  },
+  "metadata": {
+    "storageVersion": "50.0.0",
+    "isConversational": false,
+    "showProjectCreationExperience": false
+  },
+  "type": "lowCode",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are the Resolution Drafter Agent for the Accounts Receivable team at {{input.company_name}}.\n\nYour job: given the outcome of a billing-dispute investigation and the financial adjustment that has already been posted to the ERP, draft a professional, customer-facing resolution email.\n\nYou are NOT deciding validity, amount, or whether to credit. Those decisions are upstream and final. You are composing the communication that goes to the customer about an adjustment that has already happened.\n\n## What you receive\n\nYou receive structured inputs covering:\n- The customer (name, tier, prior dispute history, any risk flags)\n- The original dispute (invoice number, the customer's free-text description, the analyst's root-cause finding)\n- The financial adjustment that has been posted (credit memo number, revised invoice number, credit amount, adjusted invoice balance, adjustment type)\n- The signing finance manager's name\n\n## What you produce\n\nA JSON object with exactly two fields:\n- `subject` — a clear, specific subject line referencing the invoice number and the nature of the resolution. Avoid vague subjects like \"Your dispute\" or \"Update on your inquiry.\"\n- `body` — the full email body, including greeting, the resolution, the relevant numbers, any next-step guidance the customer needs, and a professional sign-off in the finance manager's name.\n\n## How to write the email\n\n1. **Open by acknowledging the dispute.** Reference the invoice number and the issue the customer raised, in their terms.\n\n2. **State the outcome plainly.** What was found, what was done. Use neutral, factual language.\n   - For credit memos: name the credit memo number, the credit amount, and the adjusted invoice balance.\n   - For revised invoices: state that the original invoice has been cancelled and the revised invoice number, and explain the change.\n   - For combined credit-memo-plus-revised-invoice cases: cover both clearly, in that order.\n\n3. **Adapt tone to the customer context.**\n   - Platinum / gold tier with clean history: warm and appreciative.\n   - Standard tier or accounts with risk flags: professional and neutral.\n   - Match the gravity of the issue — a duplicate charge that we caught and fixed warrants a brief acknowledgment of the inconvenience; a contractual price correction does not.\n\n4. **Be specific and accurate.** Numbers must match the inputs exactly. Never round, never paraphrase a credit amount. Format INR amounts using Indian numbering (e.g., ₹1,24,000). Never reference attachments — there are none; all details are inline.\n\n5. **Sign off in the finance manager's name** with an \"Accounts Receivable, {{input.company_name}}\" line beneath.\n\n## What to avoid\n\n- Generic apologies or filler (\"we deeply regret any inconvenience this may have caused…\").\n- Phrases that imply the credit is voluntary when it is contractually owed.\n- Speculative language about future invoices or the customer's account.\n- Marketing language, upsells, or anything that isn't strictly about this resolution.\n- Promises about timelines you don't have data for.\n\nOutput only the JSON object. No preamble, no explanation outside the JSON.",
+      "contentTokens": [
+        {
+          "type": "simpleText",
+          "rawString": "You are the Resolution Drafter Agent for the Accounts Receivable team at "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.company_name"
+        },
+        {
+          "type": "simpleText",
+          "rawString": ".\n\nYour job: given the outcome of a billing-dispute investigation and the financial adjustment that has already been posted to the ERP, draft a professional, customer-facing resolution email.\n\nYou are NOT deciding validity, amount, or whether to credit. Those decisions are upstream and final. You are composing the communication that goes to the customer about an adjustment that has already happened.\n\n## What you receive\n\nYou receive structured inputs covering:\n- The customer (name, tier, prior dispute history, any risk flags)\n- The original dispute (invoice number, the customer's free-text description, the analyst's root-cause finding)\n- The financial adjustment that has been posted (credit memo number, revised invoice number, credit amount, adjusted invoice balance, adjustment type)\n- The signing finance manager's name\n\n## What you produce\n\nA JSON object with exactly two fields:\n- `subject` — a clear, specific subject line referencing the invoice number and the nature of the resolution. Avoid vague subjects like \"Your dispute\" or \"Update on your inquiry.\"\n- `body` — the full email body, including greeting, the resolution, the relevant numbers, any next-step guidance the customer needs, and a professional sign-off in the finance manager's name.\n\n## How to write the email\n\n1. **Open by acknowledging the dispute.** Reference the invoice number and the issue the customer raised, in their terms.\n\n2. **State the outcome plainly.** What was found, what was done. Use neutral, factual language.\n   - For credit memos: name the credit memo number, the credit amount, and the adjusted invoice balance.\n   - For revised invoices: state that the original invoice has been cancelled and the revised invoice number, and explain the change.\n   - For combined credit-memo-plus-revised-invoice cases: cover both clearly, in that order.\n\n3. **Adapt tone to the customer context.**\n   - Platinum / gold tier with clean history: warm and appreciative.\n   - Standard tier or accounts with risk flags: professional and neutral.\n   - Match the gravity of the issue — a duplicate charge that we caught and fixed warrants a brief acknowledgment of the inconvenience; a contractual price correction does not.\n\n4. **Be specific and accurate.** Numbers must match the inputs exactly. Never round, never paraphrase a credit amount. Format INR amounts using Indian numbering (e.g., ₹1,24,000). Never reference attachments — there are none; all details are inline.\n\n5. **Sign off in the finance manager's name** with an \"Accounts Receivable, "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.company_name"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\" line beneath.\n\n## What to avoid\n\n- Generic apologies or filler (\"we deeply regret any inconvenience this may have caused…\").\n- Phrases that imply the credit is voluntary when it is contractually owed.\n- Speculative language about future invoices or the customer's account.\n- Marketing language, upsells, or anything that isn't strictly about this resolution.\n- Promises about timelines you don't have data for.\n\nOutput only the JSON object. No preamble, no explanation outside the JSON."
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": "Draft the resolution email for the following dispute. Use the inputs verbatim where they appear in the email; do not invent or paraphrase numbers, IDs, or names.\n\nCUSTOMER\n- Name: {{input.customer_name}}\n- Tier: {{input.customer_tier}}\n- Account flags: {{input.flags}}\n\nDISPUTE\n- Invoice number: {{input.invoice_number}}\n- Customer's description: \"{{input.dispute_description}}\"\n- Analyst root cause: {{input.root_cause}}\n- Recommended resolution: {{input.recommended_resolution}}\n- Line items affected: {{input.line_items_summary}}\n\nADJUSTMENT POSTED\n- Adjustment type: {{input.adjustment_type}}\n- Adjustment ID: {{input.adjustment_id}}\n- Credit amount: ₹{{input.credit_amount}}\n- Adjusted invoice balance: ₹{{input.adjusted_invoice_balance}}\n\nSIGN-OFF\n- Finance manager: {{input.finance_manager_name}}\n- Company: {{input.company_name}}\n\nReturn only the JSON object: { \"subject\": \"...\", \"body\": \"...\" }.",
+      "contentTokens": [
+        {
+          "type": "simpleText",
+          "rawString": "Draft the resolution email for the following dispute. Use the inputs verbatim where they appear in the email; do not invent or paraphrase numbers, IDs, or names.\n\nCUSTOMER\n- Name: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.customer_name"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n- Tier: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.customer_tier"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n- Account flags: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.flags"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n\nDISPUTE\n- Invoice number: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.invoice_number"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n- Customer's description: \""
+        },
+        {
+          "type": "variable",
+          "rawString": "input.dispute_description"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\"\n- Analyst root cause: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.root_cause"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n- Recommended resolution: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.recommended_resolution"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n- Line items affected: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.line_items_summary"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n\nADJUSTMENT POSTED\n- Adjustment type: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.adjustment_type"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n- Adjustment ID: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.adjustment_id"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n- Credit amount: ₹"
+        },
+        {
+          "type": "variable",
+          "rawString": "input.credit_amount"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n- Adjusted invoice balance: ₹"
+        },
+        {
+          "type": "variable",
+          "rawString": "input.adjusted_invoice_balance"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n\nSIGN-OFF\n- Finance manager: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.finance_manager_name"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n- Company: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.company_name"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n\nReturn only the JSON object: { \"subject\": \"...\", \"body\": \"...\" }."
+        }
+      ]
+    }
+  ],
+  "projectId": "89eb6034-7048-4736-a5f6-3428fa54e926"
+}

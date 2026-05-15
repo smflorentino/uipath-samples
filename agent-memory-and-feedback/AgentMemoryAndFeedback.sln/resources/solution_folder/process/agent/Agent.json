@@ -1,0 +1,45 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "Agent",
+    "kind": "process",
+    "type": "agent",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "7320617d-15f2-46a2-abc7-84e655ddd300",
+    "isOverridable": true,
+    "dependencies": [
+      {
+        "name": "Agent",
+        "kind": "package"
+      }
+    ],
+    "runtimeDependencies": [],
+    "files": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "type": "Agent",
+      "name": "Agent",
+      "package": {
+        "key": "ce8f62ef-b5a9-4fd1-bcbc-fd39880e9dbf"
+      },
+      "packageName": "AgentMemoryAndFeedback.sln.agent.Agent",
+      "inputArguments": "{}",
+      "hiddenForAttendedUser": false,
+      "alwaysRunning": false,
+      "autoStartProcess": false,
+      "targetFrameworkValue": "Portable",
+      "agentMemory": false,
+      "retentionAction": "Delete",
+      "retentionPeriod": 30,
+      "staleRetentionAction": "Delete",
+      "staleRetentionPeriod": 180,
+      "tags": []
+    },
+    "locks": [],
+    "key": "403a9ee5-3f81-4b7b-83ec-ef5c254f4808"
+  }
+}

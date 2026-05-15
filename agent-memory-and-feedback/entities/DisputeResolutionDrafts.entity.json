@@ -1,0 +1,51 @@
+{
+  "displayName": "Dispute Resolution Drafts",
+  "description": "Generated resolution-email drafts produced by the Resolution Drafter Agent. One row per drafted email. disputeId references Disputes.Id (the dispute the agent drafted a reply for). Many drafts may share one disputeId (re-runs, baseline vs. memory-on, A/B tests). evalName is denormalized from Disputes.evalName for eval-mode tracking; NULL for production runs.",
+  "fields": [
+    {
+      "fieldName": "disputeId",
+      "displayName": "Dispute Id",
+      "type": "STRING",
+      "isRequired": true,
+      "description": "FK -> Disputes.Id (UUID-as-string). Required so drafts cannot be orphaned."
+    },
+    {
+      "fieldName": "evalName",
+      "displayName": "Eval Name",
+      "type": "STRING",
+      "description": "Denormalized from Disputes.evalName. NULL for production runs."
+    },
+    {
+      "fieldName": "jobKey",
+      "displayName": "Job Key",
+      "type": "STRING",
+      "description": "Orchestrator job key for the agent run that produced this draft. Used to resolve the trace for feedback."
+    },
+    {
+      "fieldName": "traceId",
+      "displayName": "Trace Id",
+      "type": "STRING",
+      "description": "Distributed trace ID for the agent run. Often equal to jobKey on UiPath."
+    },
+    {
+      "fieldName": "isReviewed",
+      "displayName": "Is Reviewed",
+      "type": "BOOLEAN",
+      "description": "Has a human reviewer signed off on this draft? Flipped to true by the coded feedback app."
+    },
+    {
+      "fieldName": "subject",
+      "displayName": "Subject",
+      "type": "MULTILINE_TEXT",
+      "lengthLimit": 4000,
+      "description": "Drafted email subject line."
+    },
+    {
+      "fieldName": "body",
+      "displayName": "Body",
+      "type": "MULTILINE_TEXT",
+      "lengthLimit": 4000,
+      "description": "Drafted email body, greeting through sign-off."
+    }
+  ]
+}

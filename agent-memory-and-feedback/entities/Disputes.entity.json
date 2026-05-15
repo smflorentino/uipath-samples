@@ -1,0 +1,99 @@
+{
+  "displayName": "Disputes",
+  "description": "Customer billing disputes — one row per dispute submitted for resolution. Holds the 14 inputs the Resolution Drafter Agent consumes plus an evalName tag for eval/memory-pressure-test rows. Field names are snake_case to match the agent's input schema directly, so an RPA wrapper can pass row fields straight through. evalName is NULL for production rows.",
+  "fields": [
+    {
+      "fieldName": "customer_name",
+      "displayName": "Customer Name",
+      "type": "STRING",
+      "description": "Display name on the email greeting."
+    },
+    {
+      "fieldName": "customer_tier",
+      "displayName": "Customer Tier",
+      "type": "STRING",
+      "description": "Enum (not server-enforced): platinum | gold | silver | standard. Tone signal."
+    },
+    {
+      "fieldName": "flags",
+      "displayName": "Flags",
+      "type": "STRING",
+      "description": "Comma-separated account flags. Common values: repeat_disputer, high_value_account, or 'none'."
+    },
+    {
+      "fieldName": "company_name",
+      "displayName": "Company Name",
+      "type": "STRING",
+      "description": "Sender company name on the email sign-off (e.g., 'PATH Industries')."
+    },
+    {
+      "fieldName": "invoice_number",
+      "displayName": "Invoice Number",
+      "type": "STRING",
+      "description": "Exact invoice ID; must appear verbatim in the email's subject and body."
+    },
+    {
+      "fieldName": "dispute_description",
+      "displayName": "Dispute Description",
+      "type": "MULTILINE_TEXT",
+      "lengthLimit": 4000,
+      "description": "The customer's own words from the dispute portal submission. High-weight memory retrieval key."
+    },
+    {
+      "fieldName": "root_cause",
+      "displayName": "Root Cause",
+      "type": "STRING",
+      "description": "Enum (not server-enforced): pricing_mismatch | tax_type_error | tax_rate_error | duplicate_charge | missing_discount | quantity_mismatch | multiple. High-weight memory retrieval key."
+    },
+    {
+      "fieldName": "line_items_summary",
+      "displayName": "Line Items Summary",
+      "type": "MULTILINE_TEXT",
+      "lengthLimit": 4000,
+      "description": "One-line description of impacted line items (e.g., '2 line items, HR Coil HSN 7208')."
+    },
+    {
+      "fieldName": "recommended_resolution",
+      "displayName": "Recommended Resolution",
+      "type": "STRING",
+      "description": "Enum: full_credit | partial_credit | revised_invoice | credit_and_revised_invoice."
+    },
+    {
+      "fieldName": "adjustment_type",
+      "displayName": "Adjustment Type",
+      "type": "STRING",
+      "description": "Enum: credit_memo | revised_invoice | both. What the upstream subflow posted to the ERP."
+    },
+    {
+      "fieldName": "adjustment_id",
+      "displayName": "Adjustment ID",
+      "type": "STRING",
+      "lengthLimit": 200,
+      "description": "Adjustment identifier(s), e.g., 'CM-2026-001234' or 'CM-...,REV-INV-...' when both."
+    },
+    {
+      "fieldName": "credit_amount",
+      "displayName": "Credit Amount",
+      "type": "DECIMAL",
+      "description": "Credit amount in INR. Zero for pure tax-type corrections."
+    },
+    {
+      "fieldName": "adjusted_invoice_balance",
+      "displayName": "Adjusted Invoice Balance",
+      "type": "DECIMAL",
+      "description": "Remaining balance on the original invoice post-adjustment, in INR."
+    },
+    {
+      "fieldName": "finance_manager_name",
+      "displayName": "Finance Manager Name",
+      "type": "STRING",
+      "description": "Sign-off name on the resolution email."
+    },
+    {
+      "fieldName": "evalName",
+      "displayName": "Eval Name",
+      "type": "STRING",
+      "description": "Eval ID for eval-mode rows (B1-B10 baseline, M1-M10 memory-touching, M1-item0-M10-item0 memory pressure-tests). NULL for production rows."
+    }
+  ]
+}

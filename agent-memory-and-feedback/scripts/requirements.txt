@@ -1,0 +1,4 @@
+# Both scripts use only Python's standard library plus subprocess calls to
+# the `uip` CLI and /usr/bin/curl. No pip dependencies are required.
+#
+# Python 3.10+ recommended.
