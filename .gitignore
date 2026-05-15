@@ -144,3 +144,8 @@ vite.config.ts.timestamp-*
 
 # UiPath
 .uipath/
+
+# agent-memory-and-feedback sample: per-install working notes contain
+# tenant GUIDs, account IDs, access-token-derived values. Keep the
+# template (INSTALL_NOTES_TEMPLATE.md) committed; ignore the filled copy.
+agent-memory-and-feedback/INSTALL_NOTES.md

@@ -1,0 +1,361 @@
+{
+  "fileName": "evaluation-set-memory-driven-memory-enabled.json",
+  "id": "9c8e5f3d-2a4b-4c7f-ad6e-3b2a9f8e7d6c",
+  "name": "Memory-Driven (M1-10) - Memory Enabled",
+  "batchSize": 10,
+  "evaluatorRefs": [
+    "503062c0-1398-43ac-bdd3-fe59342a1fc6",
+    "763d709a-2f90-44be-8848-fe0041fb81f0"
+  ],
+  "evaluations": [
+    {
+      "id": "c0000001-2222-4000-8000-000000000001",
+      "name": "M1 - Tax type error: GST ITC reversal guidance (memory MEM-1)",
+      "inputs": {
+        "customer_name": "Ritu Agarwal",
+        "customer_tier": "gold",
+        "flags": "none",
+        "invoice_number": "INV-2026-04-1175",
+        "dispute_description": "Your invoice charged IGST 18% but our delivery address is in Maharashtra and your plant is in Maharashtra. This should be CGST 9% + SGST 9%.",
+        "root_cause": "tax_type_error",
+        "recommended_resolution": "revised_invoice",
+        "line_items_summary": "3 line items, pharmaceutical excipients HSN 3824",
+        "adjustment_type": "revised_invoice",
+        "adjustment_id": "REV-INV-2026-005411",
+        "credit_amount": 0,
+        "adjusted_invoice_balance": 2160000,
+        "finance_manager_name": "Priya Nair",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Revised Invoice REV-INV-2026-005411 Issued for INV-2026-04-1175 — CGST + SGST Correction",
+        "body": "Dear Ritu Agarwal,\n\nThank you for flagging the tax classification on Invoice INV-2026-04-1175. You are correct — both delivery and supply are within Maharashtra, so this is an intra-state supply and should be billed under CGST 9% + SGST 9% rather than IGST 18%, per Rule 53 of the CGST Rules.\n\nWe have cancelled the original Invoice INV-2026-04-1175 and issued revised Invoice REV-INV-2026-005411 with the correct CGST + SGST split. The total of ₹21,60,000 is unchanged; only the tax classification has been corrected.\n\nFor your GST team: please reverse the IGST input tax credit previously claimed against the original invoice and re-claim CGST + SGST in your next GSTR-3B return. Use REV-INV-2026-005411 going forward for your records and ITC claim.\n\nBest regards,\nPriya Nair\nAccounts Receivable, PATH Industries"
+      },
+      "simulationInstructions": "",
+      "expectedAgentBehavior": "Email explicitly states the customer must reverse the IGST ITC previously claimed and re-claim CGST + SGST in the next GSTR-3B. References Rule 53 of the CGST Rules. Reassures the customer that the revised invoice has the correct CGST + SGST split. Body mentions both 'INV-2026-04-1175' (cancelled) and 'REV-INV-2026-005411' (revised), and signs off as 'Priya Nair'. Specifics required: 'Rule 53', 'GSTR-3B', and language equivalent to 'reverse the ITC … reclaim'. (This eval should fail without MEM-1 injected.)",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "9c8e5f3d-2a4b-4c7f-ad6e-3b2a9f8e7d6c",
+      "createdAt": "2026-05-06T23:34:20.812Z",
+      "updatedAt": "2026-05-06T23:34:20.812Z",
+      "source": "manual"
+    },
+    {
+      "id": "c0000002-2222-4000-8000-000000000002",
+      "name": "M2 - Duplicate charge: explicit reconciliation acknowledgment (memory MEM-2)",
+      "inputs": {
+        "customer_name": "Sandeep Verma",
+        "customer_tier": "silver",
+        "flags": "none",
+        "invoice_number": "INV-2026-04-6603",
+        "dispute_description": "I think this is the same as INV-2026-03-9921 which we already paid in full. Please verify.",
+        "root_cause": "duplicate_charge",
+        "recommended_resolution": "full_credit",
+        "line_items_summary": "Full invoice, freight services SAC 9965",
+        "adjustment_type": "credit_memo",
+        "adjustment_id": "CM-2026-001318",
+        "credit_amount": 92500,
+        "adjusted_invoice_balance": 0,
+        "finance_manager_name": "Rohan Iyer",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Credit Memo CM-2026-001318 — Duplicate Charge on INV-2026-04-6603 Reversed",
+        "body": "Dear Sandeep Verma,\n\nThank you for flagging Invoice INV-2026-04-6603. You were correct — our internal reconciliation confirmed this is a duplicate of INV-2026-03-9921, which had already been paid in full. We're sorry for the inconvenience.\n\nWe have issued credit memo CM-2026-001318 for ₹92,500, fully reversing the duplicate charge. The balance on Invoice INV-2026-04-6603 is now ₹0 and the invoice is fully cleared.\n\nWe have also reviewed your other open invoices to confirm this is an isolated incident; no further duplicates were found. No action is required from you beyond updating your records.\n\nBest regards,\nRohan Iyer\nAccounts Receivable, PATH Industries"
+      },
+      "simulationInstructions": "",
+      "expectedAgentBehavior": "Email explicitly says the duplicate was caught by internal reconciliation (e.g., 'Our internal reconciliation flagged/confirmed this duplicate'). Proactively addresses the implicit 'are there more?' concern — language equivalent to 'isolated incident', 'no further duplicates', or 'other invoices verified/correct'. Body contains 'CM-2026-001318', '₹92,500', balance '₹0' / 'fully cleared', and 'Rohan Iyer'. (This eval should fail without MEM-2 injected.)",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "9c8e5f3d-2a4b-4c7f-ad6e-3b2a9f8e7d6c",
+      "createdAt": "2026-05-06T23:34:20.812Z",
+      "updatedAt": "2026-05-06T23:34:20.812Z",
+      "source": "manual"
+    },
+    {
+      "id": "c0000003-2222-4000-8000-000000000003",
+      "name": "M3 - Platinum + high_value: account manager mention (memory MEM-3)",
+      "inputs": {
+        "customer_name": "Maya Krishnan",
+        "customer_tier": "platinum",
+        "flags": "high_value_account",
+        "invoice_number": "INV-2026-03-2204",
+        "dispute_description": "Pricing on the HR Coil is ₹3,000/MT above our LME-linked contracted rate for March.",
+        "root_cause": "pricing_mismatch",
+        "recommended_resolution": "partial_credit",
+        "line_items_summary": "4 line items, HR Coil HSN 7208, 280 MT total",
+        "adjustment_type": "credit_memo",
+        "adjustment_id": "CM-2026-001327",
+        "credit_amount": 840000,
+        "adjusted_invoice_balance": 12260000,
+        "finance_manager_name": "Priya Nair",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Credit Memo CM-2026-001327 — LME-Linked Pricing Correction on INV-2026-03-2204",
+        "body": "Dear Maya Krishnan,\n\nThank you for surfacing the pricing discrepancy on Invoice INV-2026-03-2204. You are correct — the HR Coil was billed ₹3,000/MT above your LME-linked contracted rate for March across all 4 line items (280 MT total).\n\nWe have issued credit memo CM-2026-001327 for ₹8,40,000 to align the pricing with your LME-linked contracted rate. The adjusted balance on Invoice INV-2026-03-2204 is now ₹1,22,60,000.\n\nYour account manager has been notified and may reach out separately to walk through the correction and confirm the LME indexation for the upcoming month.\n\nWe value your partnership and appreciate the careful review.\n\nWarm regards,\nPriya Nair\nAccounts Receivable, PATH Industries"
+      },
+      "simulationInstructions": "",
+      "expectedAgentBehavior": "Email includes a sentence stating the customer's account manager has been notified and may reach out separately. Tone is warm and appreciative (platinum norm). Body contains 'CM-2026-001327', '₹8,40,000', '₹1,22,60,000', and 'Priya Nair'. Signals platinum-tier handling — warm, attentive, with a relationship touchpoint beyond the transaction. (This eval should fail without MEM-3 injected.)",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "9c8e5f3d-2a4b-4c7f-ad6e-3b2a9f8e7d6c",
+      "createdAt": "2026-05-06T23:34:20.812Z",
+      "updatedAt": "2026-05-06T23:34:20.812Z",
+      "source": "manual"
+    },
+    {
+      "id": "c0000004-2222-4000-8000-000000000004",
+      "name": "M4 - Revised invoice: explicit 'no payment action required' (memory MEM-4)",
+      "inputs": {
+        "customer_name": "Arjun Bose",
+        "customer_tier": "silver",
+        "flags": "none",
+        "invoice_number": "INV-2026-04-3308",
+        "dispute_description": "Your invoice has IGST but we are based in Pune and your office is also in Pune — should this not be CGST+SGST?",
+        "root_cause": "tax_type_error",
+        "recommended_resolution": "revised_invoice",
+        "line_items_summary": "2 line items, motor controllers HSN 8537",
+        "adjustment_type": "revised_invoice",
+        "adjustment_id": "REV-INV-2026-005490",
+        "credit_amount": 0,
+        "adjusted_invoice_balance": 478000,
+        "finance_manager_name": "Rohan Iyer",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Revised Invoice REV-INV-2026-005490 Issued for INV-2026-04-3308 — CGST + SGST Correction",
+        "body": "Dear Arjun Bose,\n\nThank you for flagging the tax classification on Invoice INV-2026-04-3308. You are correct — both supply and delivery are within Pune, so this is an intra-state supply and should be billed under CGST + SGST rather than IGST.\n\nWe have cancelled the original Invoice INV-2026-04-3308 and issued revised Invoice REV-INV-2026-005490 with the correct CGST + SGST split. The total of ₹4,78,000 is unchanged; only the tax classification has been corrected.\n\nNo payment action is required from you. Any payment already made remains applied to the revised invoice. Please update your books to replace the cancelled invoice number INV-2026-04-3308 with REV-INV-2026-005490 in your records.\n\nBest regards,\nRohan Iyer\nAccounts Receivable, PATH Industries"
+      },
+      "simulationInstructions": "",
+      "expectedAgentBehavior": "Email explicitly says no payment action is required from the customer and that any prior payment remains applied to the revised invoice. Email instructs the customer to update their books to replace the cancelled invoice number with the revised invoice number. Body mentions both 'INV-2026-04-3308' (cancelled) and 'REV-INV-2026-005490' (revised), and signs off as 'Rohan Iyer'. (This eval should fail without MEM-4 injected.)",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "9c8e5f3d-2a4b-4c7f-ad6e-3b2a9f8e7d6c",
+      "createdAt": "2026-05-06T23:34:20.812Z",
+      "updatedAt": "2026-05-06T23:34:20.812Z",
+      "source": "manual"
+    },
+    {
+      "id": "c0000005-2222-4000-8000-000000000005",
+      "name": "M5 - Steel HSN family: contracted ₹/MT citation (memory MEM-5)",
+      "inputs": {
+        "customer_name": "Rajesh Iyengar",
+        "customer_tier": "gold",
+        "flags": "none",
+        "invoice_number": "INV-2026-03-4471",
+        "dispute_description": "Pricing on the CR Coil lines is above what we agreed in the contract.",
+        "root_cause": "pricing_mismatch",
+        "recommended_resolution": "partial_credit",
+        "line_items_summary": "3 line items, CR Coil HSN 7209, 75 MT total",
+        "adjustment_type": "credit_memo",
+        "adjustment_id": "CM-2026-001335",
+        "credit_amount": 187500,
+        "adjusted_invoice_balance": 4312500,
+        "finance_manager_name": "Priya Nair",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Credit Memo CM-2026-001335 — CR Coil Pricing Correction on INV-2026-03-4471",
+        "body": "Dear Rajesh Iyengar,\n\nThank you for flagging the CR Coil pricing on Invoice INV-2026-03-4471. We confirmed the line items were billed above your contracted rate.\n\nWe have issued credit memo CM-2026-001335 for ₹1,87,500. The CR Coil lines have been corrected to the contracted rate of ₹52,500/MT per the pricing clause of your supply contract, applied across the 75 MT covered by this invoice. The adjusted balance on Invoice INV-2026-03-4471 is now ₹43,12,500.\n\nPlease update your records accordingly.\n\nBest regards,\nPriya Nair\nAccounts Receivable, PATH Industries"
+      },
+      "simulationInstructions": "",
+      "expectedAgentBehavior": "Email explicitly cites the contracted ₹/MT rate (e.g., 'corrected to the contracted rate of ₹X/MT') rather than just saying 'pricing was corrected'. References that the correction is per the underlying contract / pricing clause. Body mentions 'CM-2026-001335', '₹1,87,500', '₹43,12,500', and 'Priya Nair'. Cites ₹/MT precisely rather than offering a vague 'pricing was corrected'. (This eval should fail without MEM-5 injected.)",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "9c8e5f3d-2a4b-4c7f-ad6e-3b2a9f8e7d6c",
+      "createdAt": "2026-05-06T23:34:20.812Z",
+      "updatedAt": "2026-05-06T23:34:20.812Z",
+      "source": "manual"
+    },
+    {
+      "id": "c0000006-2222-4000-8000-000000000006",
+      "name": "M6 - Pricing correction: billing-system update commitment (memory MEM-6)",
+      "inputs": {
+        "customer_name": "Tara Mukherjee",
+        "customer_tier": "silver",
+        "flags": "none",
+        "invoice_number": "INV-2026-04-7724",
+        "dispute_description": "Pricing on line 2 doesn't match the rate card you sent us in February. Please review.",
+        "root_cause": "pricing_mismatch",
+        "recommended_resolution": "partial_credit",
+        "line_items_summary": "1 line item, polymer granules HSN 3902",
+        "adjustment_type": "credit_memo",
+        "adjustment_id": "CM-2026-001346",
+        "credit_amount": 38600,
+        "adjusted_invoice_balance": 612400,
+        "finance_manager_name": "Rohan Iyer",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Credit Memo CM-2026-001346 — Pricing Correction on INV-2026-04-7724",
+        "body": "Dear Tara Mukherjee,\n\nThank you for flagging the pricing mismatch on line 2 of Invoice INV-2026-04-7724. We confirmed the line was billed against an outdated rate rather than the February rate card.\n\nWe have issued credit memo CM-2026-001346 for ₹38,600. The adjusted balance on Invoice INV-2026-04-7724 is now ₹6,12,400.\n\nWe have also updated the rate card in our billing system, so subsequent invoices will reflect the correct contracted pricing automatically and you should not see this recurrence on future POs.\n\nBest regards,\nRohan Iyer\nAccounts Receivable, PATH Industries"
+      },
+      "simulationInstructions": "",
+      "expectedAgentBehavior": "Email includes a sentence committing to a billing-system update so subsequent invoices reflect the contracted pricing — language equivalent to 'we have updated the rate card in our billing system' or 'subsequent/future invoices will reflect the contracted pricing' or 'prevent recurrence'. Body mentions 'CM-2026-001346', '₹38,600', '₹6,12,400', and 'Rohan Iyer'. (This eval should fail without MEM-6 injected.)",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "9c8e5f3d-2a4b-4c7f-ad6e-3b2a9f8e7d6c",
+      "createdAt": "2026-05-06T23:34:20.812Z",
+      "updatedAt": "2026-05-06T23:34:20.812Z",
+      "source": "manual"
+    },
+    {
+      "id": "c0000007-2222-4000-8000-000000000007",
+      "name": "M7 - Repeat disputer: process-review call invitation (memory MEM-7)",
+      "inputs": {
+        "customer_name": "Harshad Mehta",
+        "customer_tier": "standard",
+        "flags": "repeat_disputer",
+        "invoice_number": "INV-2026-04-8829",
+        "dispute_description": "Your invoice has the wrong tax rate again — should be 12% not 18%.",
+        "root_cause": "tax_rate_error",
+        "recommended_resolution": "partial_credit",
+        "line_items_summary": "2 line items, industrial chemicals HSN 2914",
+        "adjustment_type": "credit_memo",
+        "adjustment_id": "CM-2026-001359",
+        "credit_amount": 24000,
+        "adjusted_invoice_balance": 376000,
+        "finance_manager_name": "Priya Nair",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Credit Memo CM-2026-001359 — Tax Rate Correction (18% → 12%) on INV-2026-04-8829",
+        "body": "Dear Harshad Mehta,\n\nThank you for flagging the tax rate on Invoice INV-2026-04-8829. You are correct — the HSN 2914 line items should have been billed at 12% rather than 18%.\n\nWe have issued credit memo CM-2026-001359 for ₹24,000 to apply the correct rate. The adjusted balance on Invoice INV-2026-04-8829 is now ₹3,76,000.\n\nGiven the recurring nature of these adjustments, we'd welcome a brief process-review call to walk through the upstream causes and stop them at the source. Please reply to this email if you'd like to schedule a short call at your convenience.\n\nBest regards,\nPriya Nair\nAccounts Receivable, PATH Industries"
+      },
+      "simulationInstructions": "",
+      "expectedAgentBehavior": "Email explicitly invites the customer to a brief process-review call to identify upstream causes — phrasing should mention the recurring nature and offer to schedule a call (e.g., 'Given the recurring nature of these adjustments… we'd welcome a short process-review call… please reply if you'd like to schedule one.'). Body still covers resolution accurately: rate correction (18% → 12%), 'CM-2026-001359', '₹24,000', '₹3,76,000', and 'Priya Nair'. Tone is not accusatory. (This eval should fail without MEM-7 injected.)",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "9c8e5f3d-2a4b-4c7f-ad6e-3b2a9f8e7d6c",
+      "createdAt": "2026-05-06T23:34:20.812Z",
+      "updatedAt": "2026-05-06T23:34:20.812Z",
+      "source": "manual"
+    },
+    {
+      "id": "c0000008-2222-4000-8000-000000000008",
+      "name": "M8 - Missing discount: include calculation breakdown (memory MEM-8)",
+      "inputs": {
+        "customer_name": "Lavanya Rao",
+        "customer_tier": "gold",
+        "flags": "none",
+        "invoice_number": "INV-2026-04-2298",
+        "dispute_description": "Could you confirm the credit memo for the missing volume discount we discussed last week?",
+        "root_cause": "missing_discount",
+        "recommended_resolution": "partial_credit",
+        "line_items_summary": "2 line items, precision instruments HSN 9026",
+        "adjustment_type": "credit_memo",
+        "adjustment_id": "CM-2026-001371",
+        "credit_amount": 64000,
+        "adjusted_invoice_balance": 1136000,
+        "finance_manager_name": "Rohan Iyer",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Credit Memo CM-2026-001371 — Volume Discount Credit on INV-2026-04-2298",
+        "body": "Dear Lavanya Rao,\n\nThank you for following up on Invoice INV-2026-04-2298. Confirming that we have posted the volume discount credit we discussed last week.\n\nWe have issued credit memo CM-2026-001371 for ₹64,000. The adjusted balance on Invoice INV-2026-04-2298 is now ₹11,36,000.\n\nCalculation: ₹16,00,000 (taxable value) × 4% (volume discount) = ₹64,000.\n\nPlease update your records accordingly. Your AP team can reconcile the credit against the PO using the calculation above.\n\nBest regards,\nRohan Iyer\nAccounts Receivable, PATH Industries"
+      },
+      "simulationInstructions": "",
+      "expectedAgentBehavior": "Email includes a calculation breakdown showing how the credit was derived: original taxable value × discount % = credit, in a form like 'Calculation: ₹16,00,000 × 4% = ₹64,000.' Body covers 'CM-2026-001371', '₹64,000', '₹11,36,000', and 'Rohan Iyer'. Shows derivation in a form the customer's AP team could verify against their PO. (This eval should fail without MEM-8 injected.)",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "9c8e5f3d-2a4b-4c7f-ad6e-3b2a9f8e7d6c",
+      "createdAt": "2026-05-06T23:34:20.812Z",
+      "updatedAt": "2026-05-06T23:34:20.812Z",
+      "source": "manual"
+    },
+    {
+      "id": "c0000009-2222-4000-8000-000000000009",
+      "name": "M9 - Tax rate error: GST ITC differential reversal (memory MEM-9)",
+      "inputs": {
+        "customer_name": "Devika Subramaniam",
+        "customer_tier": "silver",
+        "flags": "none",
+        "invoice_number": "INV-2026-04-5547",
+        "dispute_description": "GST charged is 18% — for finished cotton fabrics under HSN 5208 the rate should be 5%.",
+        "root_cause": "tax_rate_error",
+        "recommended_resolution": "partial_credit",
+        "line_items_summary": "1 line item, finished cotton fabric HSN 5208",
+        "adjustment_type": "credit_memo",
+        "adjustment_id": "CM-2026-001384",
+        "credit_amount": 91000,
+        "adjusted_invoice_balance": 591000,
+        "finance_manager_name": "Priya Nair",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Credit Memo CM-2026-001384 — GST Rate Correction (18% → 5%) on INV-2026-04-5547",
+        "body": "Dear Devika Subramaniam,\n\nThank you for flagging the GST rate on Invoice INV-2026-04-5547. You are correct — finished cotton fabrics under HSN 5208 fall under the 5% slab, not 18%.\n\nWe have issued credit memo CM-2026-001384 for ₹91,000 to refund the GST differential. The adjusted balance on Invoice INV-2026-04-5547 is now ₹5,91,000.\n\nFor your GST team: please reverse the excess input tax credit (the differential between the 18% originally billed and the corrected 5% rate) in your next GSTR-3B return. The credit memo handles the cash differential; the ITC reversal is a separate book entry on your side.\n\nBest regards,\nPriya Nair\nAccounts Receivable, PATH Industries"
+      },
+      "simulationInstructions": "",
+      "expectedAgentBehavior": "Email instructs the customer to reverse the excess GST input tax credit they may have claimed against the original invoice — specifically the differential between the originally-billed rate (18%) and the corrected rate (5%). References GSTR-3B as the return where the reversal should happen. Body covers the 18% → 5% slab correction, 'CM-2026-001384', '₹91,000'. Distinguishes the ITC reversal from the credit memo for the rate differential itself. (This eval should fail without MEM-9 injected.)",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "9c8e5f3d-2a4b-4c7f-ad6e-3b2a9f8e7d6c",
+      "createdAt": "2026-05-06T23:34:20.812Z",
+      "updatedAt": "2026-05-06T23:34:20.812Z",
+      "source": "manual"
+    },
+    {
+      "id": "c0000010-2222-4000-8000-000000000010",
+      "name": "M10 - High-value (>10L) credit: formal close + AR escalation (memory MEM-10)",
+      "inputs": {
+        "customer_name": "Sameer Joshi",
+        "customer_tier": "gold",
+        "flags": "high_value_account",
+        "invoice_number": "INV-2026-03-1190",
+        "dispute_description": "Pricing across all 6 line items was billed at the prior contract's rates — we signed an updated MSA effective February 1.",
+        "root_cause": "pricing_mismatch",
+        "recommended_resolution": "partial_credit",
+        "line_items_summary": "6 line items, machined components HSN 8483",
+        "adjustment_type": "credit_memo",
+        "adjustment_id": "CM-2026-001393",
+        "credit_amount": 1240000,
+        "adjusted_invoice_balance": 8860000,
+        "finance_manager_name": "Priya Nair",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Credit Memo CM-2026-001393 — MSA Amendment Pricing Correction on INV-2026-03-1190",
+        "body": "Dear Mr. Joshi,\n\nThank you for raising the pricing on Invoice INV-2026-03-1190. We have confirmed that all 6 line items should have been billed at the rates of the updated MSA effective 1 February, but were issued at the prior contract's rates in error.\n\nTo correct this, we have issued credit memo CM-2026-001393 for ₹12,40,000 to apply the updated MSA pricing across the affected line items. The adjusted balance on Invoice INV-2026-03-1190 is now ₹88,60,000.\n\nGiven the materiality of this adjustment, please consider this email confirmation of the correction. Should you require any further detail, audit trail, or escalation on this matter, please contact me directly at the address below.\n\nSincerely,\n\nPriya Nair\nHead of Accounts Receivable\nAccounts Receivable, PATH Industries"
+      },
+      "simulationInstructions": "",
+      "expectedAgentBehavior": "Sign-off uses the formal close convention — explicit 'AR Manager', 'Head of Accounts Receivable', or 'Accounts Receivable Manager' titling beneath the manager's name, with a direct contact / escalation line ('please contact me directly at', 'reach me directly', 'direct line'). Tone is more measured and formal than a routine credit (this is >₹10L). Body correctly cites 'CM-2026-001393', '₹12,40,000', '₹88,60,000', the MSA effective date, and 'Priya Nair'. Reads with appropriate formality and provides a direct escalation path. (This eval should fail without MEM-10 injected.)",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "9c8e5f3d-2a4b-4c7f-ad6e-3b2a9f8e7d6c",
+      "createdAt": "2026-05-06T23:34:20.812Z",
+      "updatedAt": "2026-05-06T23:34:20.812Z",
+      "source": "manual"
+    }
+  ],
+  "modelSettings": [],
+  "createdAt": "2026-05-06T23:34:20.812Z",
+  "updatedAt": "2026-05-14T05:10:45.568Z",
+  "agentMemoryEnabled": true,
+  "agentMemorySettings": [
+    {
+      "id": "default",
+      "resultCount": "same-as-agent",
+      "searchMode": "same-as-agent",
+      "threshold": "same-as-agent"
+    },
+    {
+      "id": "NoMemory",
+      "resultCount": "NoMemory",
+      "searchMode": "semantic",
+      "threshold": "NoMemory"
+    }
+  ],
+  "lineByLineEvaluation": false
+}

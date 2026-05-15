@@ -1,0 +1,83 @@
+{
+  "fileName": "evaluation-set-default.json",
+  "id": "fba2a6e4-1a4b-4e18-b14a-062861e37ed8",
+  "name": "Default Evaluation Set",
+  "batchSize": 10,
+  "evaluatorRefs": [
+    "05f51801-2545-4693-a2ae-4fb238195b75"
+  ],
+  "evaluations": [
+    {
+      "id": "88734792-20b5-456d-a5e0-212956791d03",
+      "name": "Debug Run 5/6/2026, 5:19:21 PM",
+      "inputs": {
+        "customer_name": "Madhav Saxena",
+        "customer_tier": "gold",
+        "flags": "none",
+        "invoice_number": "INV-2026-02-1144",
+        "dispute_description": "Invoice charged IGST 18% but the supply is intra-state — should be CGST 9% + SGST 9%.",
+        "root_cause": "tax_type_error",
+        "recommended_resolution": "revised_invoice",
+        "line_items_summary": "Pharmaceutical raw materials HSN 2933",
+        "adjustment_type": "revised_invoice",
+        "adjustment_id": "REV-INV-2026-004928",
+        "credit_amount": 0,
+        "adjusted_invoice_balance": 1450000,
+        "finance_manager_name": "Priya Nair",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Resolution for Invoice INV-2026-02-1144 – Revised Invoice for Tax Type Correction",
+        "body": "Dear Madhav Saxena,\n\nThank you for raising your concern regarding Invoice INV-2026-02-1144, where you noted that the invoice charged IGST 18% but the supply is intra-state and should be CGST 9% + SGST 9%.\n\nUpon review, we confirmed a tax type error affecting Pharmaceutical raw materials HSN 2933. Accordingly, the original invoice has been cancelled and a revised invoice, REV-INV-2026-004928, has been issued to reflect the correct tax treatment.\n\nThe posted adjustment details are as follows:\n- Revised invoice number: REV-INV-2026-004928\n- Credit amount: ₹0\n- Adjusted invoice balance: ₹1450000\n\nPlease refer to revised invoice REV-INV-2026-004928 for your records and for any further processing on this billing.\n\nThank you for your continued partnership.\n\nBest regards,\nPriya Nair\nAccounts Receivable, PATH Industries"
+      },
+      "expectedAgentBehavior": "",
+      "simulationInstructions": "",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "fba2a6e4-1a4b-4e18-b14a-062861e37ed8",
+      "createdAt": "2026-05-07T00:19:21.019Z",
+      "updatedAt": "2026-05-07T00:19:21.019Z",
+      "source": "debugRun"
+    },
+    {
+      "id": "83fda1ce-3ab4-4bbc-9e17-44e66c3e4480",
+      "name": "From Agent run - ResolutionDrafterAgent",
+      "inputs": {
+        "customer_name": "Madhav Saxena",
+        "customer_tier": "gold",
+        "flags": "none",
+        "invoice_number": "INV-2026-02-1144",
+        "dispute_description": "Invoice charged IGST 18% but the supply is intra-state — should be CGST 9% + SGST 9%.",
+        "root_cause": "tax_type_error",
+        "recommended_resolution": "revised_invoice",
+        "line_items_summary": "Pharmaceutical raw materials HSN 2933",
+        "adjustment_type": "revised_invoice",
+        "adjustment_id": "REV-INV-2026-004928",
+        "credit_amount": 0,
+        "adjusted_invoice_balance": 1450000,
+        "finance_manager_name": "Priya Nair",
+        "company_name": "PATH Industries"
+      },
+      "expectedOutput": {
+        "subject": "Resolution for Invoice INV-2026-02-1144 – Revised Invoice for Tax Type Correction",
+        "body": "Dear Madhav Saxena,\n\nThank you for raising your concern regarding Invoice INV-2026-02-1144, where you noted that the invoice charged IGST 18% but the supply is intra-state and should be CGST 9% + SGST 9%.\n\nUpon review, we confirmed a tax type error affecting Pharmaceutical raw materials HSN 2933. Accordingly, the original invoice has been cancelled and a revised invoice, REV-INV-2026-004928, has been issued to reflect the correct tax treatment.\n\nThe posted adjustment details are as follows:\n- Revised invoice number: REV-INV-2026-004928\n- Credit amount: ₹0\n- Adjusted invoice balance: ₹1450000\n\nPlease refer to revised invoice REV-INV-2026-004928 for your records and for any further processing on this billing.\n\nThank you for your continued partnership.\n\nBest regards,\nPriya Nair\nAccounts Receivable, PATH Industries"
+      },
+      "expectedAgentBehavior": "",
+      "simulationInstructions": "",
+      "simulateInput": false,
+      "inputGenerationInstructions": "",
+      "simulateTools": false,
+      "evalSetId": "fba2a6e4-1a4b-4e18-b14a-062861e37ed8",
+      "createdAt": "2026-05-07T00:19:27.707Z",
+      "updatedAt": "2026-05-07T00:19:27.707Z",
+      "source": "debugRun"
+    }
+  ],
+  "modelSettings": [],
+  "createdAt": "2026-05-06T23:34:20.812Z",
+  "updatedAt": "2026-05-07T00:19:27.707Z",
+  "agentMemoryEnabled": true,
+  "agentMemorySettings": [],
+  "lineByLineEvaluation": false
+}

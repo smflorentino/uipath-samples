@@ -1,0 +1,25 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "Resolution Draft Memory",
+    "kind": "memorySpace",
+    "apiVersion": "ecs.uipath.com/v2",
+    "isOverridable": true,
+    "dependencies": [],
+    "runtimeDependencies": [],
+    "files": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "name": "Resolution Draft Memory",
+      "description": "",
+      "includeSubfolders": false,
+      "encrypted": false
+    },
+    "locks": [],
+    "key": "5fc69d30-99b8-4180-0974-08deb116dc33"
+  }
+}

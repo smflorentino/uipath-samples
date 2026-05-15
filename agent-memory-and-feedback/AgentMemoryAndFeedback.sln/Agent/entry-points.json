@@ -1,0 +1,112 @@
+{
+  "$schema": "https://cloud.uipath.com/draft/2024-12/entry-point",
+  "$id": "entry-points.json",
+  "entryPoints": [
+    {
+      "filePath": "/content/agent.json",
+      "type": "agent",
+      "uniqueId": "a9de7a91-942c-4533-a523-8f36a0db94dd",
+      "input": {
+        "type": "object",
+        "properties": {
+          "customer_name": {
+            "type": "string",
+            "description": "Display name on the email greeting."
+          },
+          "customer_tier": {
+            "type": "string",
+            "description": "Customer tier; tone signal.",
+            "enum": [
+              "platinum",
+              "gold",
+              "silver",
+              "standard"
+            ]
+          },
+          "flags": {
+            "type": "string",
+            "description": "Comma-separated account flags (e.g., 'repeat_disputer', 'high_value_account', 'high_value_account, repeat_disputer'). Use 'none' or empty string when no flags apply."
+          },
+          "invoice_number": {
+            "type": "string",
+            "description": "Exact invoice ID; must appear verbatim in subject and body."
+          },
+          "dispute_description": {
+            "type": "string",
+            "description": "The customer's own words from the portal submission."
+          },
+          "root_cause": {
+            "type": "string",
+            "description": "Analyst root-cause finding for the dispute.",
+            "enum": [
+              "pricing_mismatch",
+              "tax_type_error",
+              "tax_rate_error",
+              "duplicate_charge",
+              "missing_discount",
+              "quantity_mismatch",
+              "multiple"
+            ]
+          },
+          "recommended_resolution": {
+            "type": "string",
+            "description": "Recommended downstream action for this dispute.",
+            "enum": [
+              "full_credit",
+              "partial_credit",
+              "revised_invoice",
+              "credit_and_revised_invoice"
+            ]
+          },
+          "line_items_summary": {
+            "type": "string",
+            "description": "One-line description of impacted line items (e.g., '2 line items, HR Coil HSN 7208')."
+          },
+          "adjustment_type": {
+            "type": "string",
+            "description": "What the upstream subflow posted to the ERP.",
+            "enum": [
+              "credit_memo",
+              "revised_invoice",
+              "both"
+            ]
+          },
+          "adjustment_id": {
+            "type": "string",
+            "description": "Adjustment identifier(s) (e.g., 'CM-2026-001234' or 'REV-INV-2026-005678'). For adjustment_type 'both', pass both IDs comma-separated."
+          },
+          "credit_amount": {
+            "type": "number",
+            "description": "Credit amount in INR. Zero for pure tax-type corrections."
+          },
+          "adjusted_invoice_balance": {
+            "type": "number",
+            "description": "Remaining balance on the original invoice post-adjustment, in INR."
+          },
+          "finance_manager_name": {
+            "type": "string",
+            "description": "Sign-off name."
+          },
+          "company_name": {
+            "type": "string",
+            "description": "Sender company name (e.g., 'PATH Industries')."
+          }
+        },
+        "title": "Inputs"
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "description": "Specific subject line referencing the invoice number and the nature of the resolution."
+          },
+          "body": {
+            "type": "string",
+            "description": "Full email body, greeting through sign-off, plain text."
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "$featureType": "memorySpace",
+  "id": "6f371622-a979-49df-894d-202d4ea6a49b",
+  "referenceKey": "5fc69d30-99b8-4180-0974-08deb116dc33",
+  "folderPath": "solution_folder",
+  "name": "Resolution Draft Memory",
+  "memorySpaceName": "Resolution Draft Memory",
+  "description": "",
+  "isEnabled": true,
+  "dynamicFewShotSettings": {
+    "isEnabled": true,
+    "threshold": 0,
+    "resultCount": 3,
+    "searchMode": "hybrid",
+    "fieldSettings": [
+      {
+        "id": "175f5dd9-4e0b-4ff4-aae6-64c33d26e8e3",
+        "name": "customer_tier",
+        "weight": 1
+      },
+      {
+        "id": "2a73c963-c90c-442d-8408-8e33fbcb2c8d",
+        "name": "flags",
+        "weight": 1
+      },
+      {
+        "id": "6c027e88-665e-412e-9940-d82707c4a08c",
+        "name": "root_cause",
+        "weight": 1
+      }
+    ]
+  }
+}
