@@ -1,0 +1,4 @@
+{
+  "scope": "OR.Execution OR.Folders OR.Jobs ConversationalAgents Traces.Api DataFabric.Schema.Read DataFabric.Data.Read DataFabric.Data.Write",
+  "clientId": "9b25b052-22bc-40eb-b6b3-db446487c1e4"
+}
