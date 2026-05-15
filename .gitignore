@@ -144,6 +144,7 @@ vite.config.ts.timestamp-*
 
 # UiPath
 .uipath/
+.local/
 
 # agent-memory-and-feedback sample: per-install working notes contain
 # tenant GUIDs, account IDs, access-token-derived values. Keep the
